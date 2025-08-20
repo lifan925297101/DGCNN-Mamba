@@ -28,7 +28,7 @@ Our proposed DGCNN-Mamba framework integrates local geometric feature extraction
 - **Global Context:** Generates global contextual features (B×D×2N)
 
 ### 3. **Cross-Modal Feature Fusion (bCIA Module)**
-- **Multi-Bin Processing:** Features are processed through multiple bin sizes [1, 2, 4, 8, 16] for comprehensive representation
+- **Multi-Bin Processing:** Features are processed through multiple bin sizes [1, 2, 4, 8, 16，32] for comprehensive representation
 - **Cross-Instance Adaptation:** Bidirectional attention mechanism between support and query sets
 - **Support-Query Fusion:** 
   - Support features enhanced with query context: `S_cross = S + MLP([S, Attn(S→Q)])`
