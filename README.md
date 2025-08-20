@@ -54,10 +54,36 @@ This project is built upon the following environment:
 * Install CUDA 11.0+
 * Install PyTorch 1.10.2+
 
-The package requirements include:
-* pytorch==1.10.2
-* tqdm==4.63.1
-* tensorboard==2.8.0
+### Basic Requirements
+```bash
+pip install pytorch==1.10.2
+pip install tqdm==4.63.1
+pip install tensorboard==2.8.0
+```
+
+### Extension Dependencies
+
+#### Chamfer Distance & EMD
+```bash
+cd ./extensions/chamfer_dist && python setup.py install --user
+cd ./extensions/emd && python setup.py install --user
+```
+
+#### PointNet++
+```bash
+pip install "git+https://github.com/erikwijmans/Pointnet2_PyTorch.git#egg=pointnet2_ops&subdirectory=pointnet2_ops_lib"
+```
+
+#### GPU kNN
+```bash
+pip install --upgrade https://github.com/unlimblue/KNN_CUDA/releases/download/0.2/KNN_CUDA-0.2-py3-none-any.whl
+```
+
+#### Mamba Dependencies
+```bash
+pip install causal-conv1d>=1.2.0
+cd mamba && pip install .
+```
 
 ## Datasets
 
