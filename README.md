@@ -1,6 +1,7 @@
-# DGCNN-Mamba: Robust Few-Shot 3D Point Cloud Classification via Cross-Modal Feature Fusion
+# Fusing Mamba and DGCNN for Robust Few-Shot 3D Point Cloud Classification
 
-![Architecture Overview](https://user-images.githubusercontent.com/63827451/195998009-4463e9c3-af93-4ae1-b47c-6f5472c7e0a3.png)
+![Architecture Overview](images/structure.png)
+
 
 ## Introduction
 
