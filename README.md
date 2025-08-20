@@ -13,18 +13,39 @@ Furthermore, we introduce a multi-bin Cross-Instance Adaptation (bCIA) module to
 
 ## Architecture Overview
 
-Our proposed framework consists of two main branches:
+Our proposed DGCNN-Mamba framework integrates local geometric feature extraction with global contextual modeling for robust few-shot 3D point cloud classification. The architecture consists of three main components:
 
-**Point Cloud Branch (Bottom):**
-- **Inputs:** Support Point Clouds (P^S) and Query Point Clouds (P^Q)
-- **DGCNN:** Processes input point clouds to extract local geometric features
-- **Hilbert & Trans-Hilbert:** Dual-path processing for enhanced feature representation
-- **Mamba Block:** Captures global, long-range dependencies efficiently
-- **Feature Fusion:** Combines local DGCNN features with global Mamba context
+### 1. **Point Cloud Feature Extraction (DGCNN Branch)**
+- **Input Processing:** Raw 3D point clouds (B×N×3) are processed through DGCNN backbone
+- **Local Feature Learning:** K-NN graph construction with dynamic graph CNN layers
+- **Geometric Representation:** Extracts local geometric patterns and spatial relationships
+- **Output:** Local geometric features with dimensions (B×D×N)
 
-**Cross-Modal Fusion:**
-- **bCIA Module:** Multi-bin Cross-Instance Adaptation for comprehensive support-query correlation modeling
-- **Feature Integration:** Fuses geometric and contextual information for robust classification
+### 2. **Global Context Modeling (Mamba Branch)**
+- **Hilbert & Trans-Hilbert Processing:** Dual-path feature transformation for enhanced representation
+- **Token Embedding:** Converts point features to sequence tokens with positional encoding
+- **Mamba Blocks:** State Space Model (SSM) layers capture long-range dependencies efficiently
+- **Global Context:** Generates global contextual features (B×D×2N)
+
+### 3. **Cross-Modal Feature Fusion (bCIA Module)**
+- **Multi-Bin Processing:** Features are processed through multiple bin sizes [1, 2, 4, 8, 16] for comprehensive representation
+- **Cross-Instance Adaptation:** Bidirectional attention mechanism between support and query sets
+- **Support-Query Fusion:** 
+  - Support features enhanced with query context: `S_cross = S + MLP([S, Attn(S→Q)])`
+  - Query features enhanced with support context: `Q_cross = Q + MLP([Q, Attn(Q→S)])`
+- **Feature Integration:** Combines local DGCNN features with global Mamba context through element-wise multiplication
+
+### 4. **Few-Shot Classification Head**
+- **Prototype Learning:** Support features serve as class prototypes
+- **Distance Computation:** Cosine similarity between query and prototype features
+- **Triple Loss:** Metric learning optimization for better feature discrimination
+- **Classification:** Softmax-based prediction with enhanced feature representation
+
+### Key Innovations:
+- **Efficient Long-Range Modeling:** Mamba SSM provides O(L) complexity vs O(L²) for transformers
+- **Multi-Scale Feature Fusion:** Multiple bin sizes capture different levels of feature granularity
+- **Robust Feature Learning:** Combination of local geometric and global contextual information
+- **Cross-Instance Enhancement:** Bidirectional attention improves support-query correlation modeling
 
 ## Installation
 
